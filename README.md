@@ -1,4 +1,4 @@
-# 🚀 Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
+#  Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
 
 **Étudiant :** Mathis MAURY  
 **Date :** Février 2026  
@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 1. Structure et Provider (Partie 1 — 10/10)
+##  1. Structure et Provider (Partie 1)
 Le projet respecte les conventions de nommage et la séparation des fichiers exigées pour éviter la pénalité de **-5 pts** :
 * **`versions.tf`** : Contraintes de versions Terraform et provider.
 * **`provider.tf`** : Bloc `features {}` présent.
@@ -16,7 +16,7 @@ Le projet respecte les conventions de nommage et la séparation des fichiers exi
 
 ---
 
-## 🌐 2. Réseau (Partie 2 — 15/15)
+##  2. Réseau (Partie 2)
 L'infrastructure réseau est isolée et correctement référencée :
 * **Resource Group** : Nom dynamique avec tags d'identification.
 * **VNET** : CIDR `10.0.0.0/16` avec référence correcte au RG.
@@ -25,7 +25,7 @@ L'infrastructure réseau est isolée et correctement référencée :
 
 ---
 
-## 🛡️ 3. Sécurité (Partie 3 — 15/15)
+##  3. Sécurité (Partie 3) 
 Mise en place d'un **Network Security Group (NSG)** rattaché au subnet :
 * **Règle SSH (port 22)** : Priorité et protocole configurés.
 * **Règle HTTP (port 80)** : Accès autorisé pour le trafic Web.
@@ -34,7 +34,7 @@ Mise en place d'un **Network Security Group (NSG)** rattaché au subnet :
 
 ---
 
-## 💻 4. Machines Virtuelles (Partie 4 — 25/25)
+## 💻 4. Machines Virtuelles (Partie 4)
 Déploiement de **2 instances Linux** avec automatisation :
 * **NICs** : Adressage IP dynamique, sans IP publique directe (sécurité renforcée).
 * **Configuration** : Taille `Standard_B1s`, image Ubuntu, authentification par mot de passe.
@@ -43,7 +43,7 @@ Déploiement de **2 instances Linux** avec automatisation :
 
 ---
 
-## ⚖️ 5. Load Balancer (Partie 5 — 25/25)
+## ⚖️ 5. Load Balancer (Partie 5)
 Point d'entrée unique pour la haute disponibilité :
 * **IP Publique** : SKU Standard et allocation Statique.
 * **Backend Pool** : Association automatique des 2 cartes réseau (NICs) des VMs.
@@ -53,7 +53,7 @@ Point d'entrée unique pour la haute disponibilité :
 
 ---
 
-## ✅ 6. Validation et Nettoyage (Partie 6 — 10/10)
+## ✅ 6. Validation et Nettoyage (Partie 6)
 
 ### Preuves de déploiement
 * **Capture `terraform plan`** : Validation de la planification des ressources.
