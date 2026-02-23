@@ -1,4 +1,4 @@
-# 🚀 Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
+<img width="1881" height="621" alt="image" src="https://github.com/user-attachments/assets/8dcaf45b-3a96-48a4-9215-e18c0f0f69ad" /># 🚀 Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
 
 **Étudiant :** Mathis MAURY  
 **Date :** Février 2026  
@@ -57,9 +57,13 @@ Point d'entrée unique pour la haute disponibilité :
 
 ### Preuves de déploiement
 * **Capture `terraform plan`** : Validation de la planification des ressources.
-  <img width="802" height="147" alt="image" src="https://github.com/user-attachments/assets/0ca2a586-534b-47cc-a7c0-40148a1601e9" />
+<img width="1881" height="621" alt="image" src="https://github.com/user-attachments/assets/406b8d68-d6f0-472f-8faa-284a563b6a2b" />
+
 * **Capture `terraform apply`** : Confirmation de la création sans erreur.
+<img width="802" height="147" alt="image" src="https://github.com/user-attachments/assets/0ca2a586-534b-47cc-a7c0-40148a1601e9" />
+
 * **Capture Accès Web** : Preuve que les deux VMs répondent via l'IP du Load Balancer.
+<img width="1907" height="906" alt="image" src="https://github.com/user-attachments/assets/13837a75-d057-4d9b-aa2a-2e7f627ec8f8" />
 
 > **Note sur le Load Balancing** : Pour voir la **VM 0** répondre après la **VM 1**, j'ai utilisé la commande suivante dans le terminal pour contourner la persistance de session du navigateur :
 > `for i in {1..10}; do curl -s http://<IP_DU_LOAD_BALANCER> | grep "VM"; done`
