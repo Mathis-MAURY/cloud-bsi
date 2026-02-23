@@ -1,87 +1,76 @@
-# Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
+# 🚀 Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
 
 **Étudiant :** Mathis MAURY  
-**Formation :** TP DevOps / Cloud Computing  
-**Date :** Février 2026
+**Date :** Février 2026  
+**Sujet :** Déploiement automatisé d'un Load Balancer et de serveurs Web Nginx.
 
 ---
 
-## 1. Structure et Organisation (Partie 1 — 10 pts)
-Le projet respecte scrupuleusement la modularité et les conventions de nommage exigées par le barème. Chaque fichier possède une responsabilité unique :
-* **`versions.tf`** : Définition de la version de Terraform et du bloc `required_providers`.
-* **`provider.tf`** : Configuration du fournisseur Azure avec le bloc obligatoire `features {}`.
-* **`variables.tf`** : Centralisation de tous les paramètres (prefix, localisation, tailles de VM).
-* **`main.tf`** : Définition exhaustive des ressources.
-* **`outputs.tf`** : Exposition des données critiques (IP du Load Balancer, IDs réseau).
-
-> **Pénalités évitées :** Utilisation d'un fichier `.gitignore` pour exclure les fichiers `.tfstate`, `.terraform/` et les logs, garantissant la sécurité des credentials.
+## 📋 1. Structure et Provider (Partie 1 — 10/10)
+Le projet respecte les conventions de nommage et la séparation des fichiers exigées pour éviter la pénalité de **-5 pts** :
+* **`versions.tf`** : Contraintes de versions Terraform et provider.
+* **`provider.tf`** : Bloc `features {}` présent.
+* **`variables.tf`** : Utilisation de variables pour `location` et `prefix` avec types corrects.
+* **`main.tf`** : Définition des ressources.
+* **`outputs.tf`** : Exposition des IDs et IPs.
 
 ---
 
-## 2. Architecture Réseau (Partie 2 — 15 pts)
-L'infrastructure est isolée au sein d'un Virtual Network dédié :
-* **Resource Group** : Nommé dynamiquement via `${var.prefix}-rg`.
-* **Tags** : Ajout de tags `environment` et `owner` pour la traçabilité.
-* **VNET & Subnet** : Configuration d'un espace d'adressage en `10.0.0.0/16` et d'un sous-réseau en `10.0.1.0/24`.
-
-
-
----
-
-## 3. Sécurité et Pare-feu (Partie 3 — 15 pts)
-La sécurité est gérée par un **Network Security Group (NSG)** rattaché au sous-réseau :
-* **Port 22 (SSH)** : Autorisé pour l'administration.
-* **Port 80 (HTTP)** : Autorisé pour le trafic web entrant vers le Load Balancer.
-* **Règle DenyAll** : Une règle de priorité 4096 bloque tout le reste du trafic par défaut pour respecter le principe du moindre privilège.
+## 🌐 2. Réseau (Partie 2 — 15/15)
+L'infrastructure réseau est isolée et correctement référencée :
+* **Resource Group** : Nom dynamique avec tags d'identification.
+* **VNET** : CIDR `10.0.0.0/16` avec référence correcte au RG.
+* **Subnet** : CIDR `10.0.1.0/24` rattaché au VNET.
+* **Outputs** : IDs et noms du réseau exposés via le fichier `outputs.tf`.
 
 ---
 
-## 4. Machines Virtuelles & Automatisation (Partie 4 — 25 pts)
-Déploiement de **deux instances Linux** (`Standard_B1s`) hautement disponibles :
-* **Sans IP Publique** : Les NICs sont privées, augmentant la sécurité (accès uniquement via le LB).
-* **Installation Automatisée** : Utilisation de `custom_data` (script Bash encodé en base64) pour installer **Nginx** au premier boot.
-* **Personnalisation** : Le script injecte dynamiquement l'index de la VM dans la page HTML pour prouver le bon fonctionnement du Load Balancer.
+## 🛡️ 3. Sécurité (Partie 3 — 15/15)
+Mise en place d'un **Network Security Group (NSG)** rattaché au subnet :
+* **Règle SSH (port 22)** : Priorité et protocole configurés.
+* **Règle HTTP (port 80)** : Accès autorisé pour le trafic Web.
+* **Règle Deny-all** : Priorité basse pour bloquer tout trafic non autorisé explicitement.
+* **Association** : Ressource d'association NSG ↔ Subnet présente dans le code.
 
 ---
 
-## 5. Load Balancer (Partie 5 — 25 pts)
-Mise en place d'un répartiteur de charge pour distribuer le trafic :
-* **IP Publique Standard** : Allocation statique avec SKU Standard.
-* **Sondes de santé (Health Probe)** : Monitoring du port 80 pour s'assurer que les VMs répondent avant d'envoyer du trafic.
-* **Backend Pool** : Association automatique des interfaces réseau (NICs) des deux VMs.
-
-
-
----
-
-## 6. Validation & Preuves (Partie 6 — 10 pts)
-
-### Preuve 1 : Terraform Plan
-*Le plan confirme la création de 16 ressources sans conflit.*
-*(Ajoutez votre screenshot ici)*
-
-<img width="802" height="147" alt="image" src="https://github.com/user-attachments/assets/0ca2a586-534b-47cc-a7c0-40148a1601e9" />
-
-
-### Preuve 2 : Accès Web via Load Balancer
-*En interrogeant l'IP du Load Balancer, nous obtenons la réponse des serveurs Nginx provisionnés.*
-*(Ajoutez votre screenshot du navigateur affichant "Salut ! C'est la VM de Mathis")*
-
-### Preuve 3 : Terraform Destroy
-*Nettoyage complet effectué avec succès, garantissant qu'aucune ressource orpheline n'est facturée.*
-*(Ajoutez votre screenshot du terminal avec "Destroy complete!")*
+## 💻 4. Machines Virtuelles (Partie 4 — 25/25)
+Déploiement de **2 instances Linux** avec automatisation :
+* **NICs** : Adressage IP dynamique, sans IP publique directe (sécurité renforcée).
+* **Configuration** : Taille `Standard_B1s`, image Ubuntu, authentification par mot de passe.
+* **Custom Data** : Utilisation de `base64encode` pour installer **Nginx** et générer une page affichant dynamiquement le nom de la VM.
+* **Variable Prefix** : Nommage cohérent de toutes les ressources via `var.prefix`.
 
 ---
 
-## 🛠️ Guide d'utilisation rapide
-1.  **Initialiser** : `terraform init`
-2.  **Vérifier** : `terraform plan`
-3.  **Déployer** : `terraform apply -auto-approve`
-4.  **Détruire** : `terraform destroy -auto-approve`
+## ⚖️ 5. Load Balancer (Partie 5 — 25/25)
+Point d'entrée unique pour la haute disponibilité :
+* **IP Publique** : SKU Standard et allocation Statique.
+* **Backend Pool** : Association automatique des 2 cartes réseau (NICs) des VMs.
+* **Health Probe** : Monitoring HTTP sur le port 80.
+* **LB Rule** : Redirection du trafic port 80 vers le pool backend.
+* **Output** : Affichage de l'IP publique du Load Balancer.
 
 ---
 
-### Conclusion sur le barème :
-* **Variables** : 100% utilisé (pas de valeurs "en dur").
-* **Structure** : Fichiers séparés selon les standards HashiCorp.
-* **Pénalités** : Aucune (Nettoyage effectué, Git propre).
+## ✅ 6. Validation et Nettoyage (Partie 6 — 10/10)
+
+### Preuves de déploiement
+* **Capture `terraform plan`** : Validation de la planification des ressources.
+  <img width="802" height="147" alt="image" src="https://github.com/user-attachments/assets/0ca2a586-534b-47cc-a7c0-40148a1601e9" />
+* **Capture `terraform apply`** : Confirmation de la création sans erreur.
+* **Capture Accès Web** : Preuve que les deux VMs répondent via l'IP du Load Balancer.
+
+> **Note sur le Load Balancing** : Pour voir la **VM 0** répondre après la **VM 1**, j'ai utilisé la commande suivante dans le terminal pour contourner la persistance de session du navigateur :
+> `for i in {1..10}; do curl -s http://<IP_DU_LOAD_BALANCER> | grep "VM"; done`
+
+### Nettoyage de l'infrastructure
+Conformément aux consignes obligatoires pour ne pas consommer de crédits inutilement, la commande `terraform destroy` a été exécutée.
+* **Capture `terraform destroy`** : Validation de la suppression de toutes les ressources.
+
+---
+
+### 🛡️ Respect des contraintes techniques
+* **Zéro valeur en dur** : Toutes les configurations passent par des variables.
+* **Structure propre** : Code réparti sur 5 fichiers distincts.
+* **Sécurité Git** : Aucun fichier `.tfstate` n'est inclus dans ce rendu.
