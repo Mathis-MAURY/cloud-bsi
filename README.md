@@ -7,7 +7,6 @@
 ---
 
 ##  1. Structure et Provider (Partie 1)
-Le projet respecte les conventions de nommage et la séparation des fichiers exigées pour éviter la pénalité de **-5 pts** :
 * **`versions.tf`** : Contraintes de versions Terraform et provider.
 * **`provider.tf`** : Bloc `features {}` présent.
 * **`variables.tf`** : Utilisation de variables pour `location` et `prefix` avec types corrects.
