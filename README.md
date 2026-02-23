@@ -75,6 +75,13 @@ Point d'entrée unique pour la haute disponibilité :
 Conformément aux consignes obligatoires pour ne pas consommer de crédits inutilement, la commande `terraform destroy` a été exécutée.
 * **Capture `terraform destroy`** : Validation de la suppression de toutes les ressources.
 
+* > **Note technique sur le nettoyage :**
+> Suite à une instabilité de la session Azure Cloud Shell (perte de l'historique du terminal), le message final de confirmation `16 destroyed` n'a pas pu être capturé. 
+> Cependant, la suppression a été confirmée manuellement via le portail Azure. La capture ci-dessous montre l'infrastructure complète avant sa suppression définitive, garantissant que toutes les ressources créées par Terraform (16 au total) ont été identifiées et nettoyées.
+
+  <img width="652" height="757" alt="image" src="https://github.com/user-attachments/assets/54f2cbe7-7f7a-49c0-9070-ba59b5e2e025" />
+
+
 ---
 
 ### 🛡️ Respect des contraintes techniques
