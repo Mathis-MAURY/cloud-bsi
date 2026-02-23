@@ -65,7 +65,7 @@ Point d'entrée unique pour la haute disponibilité :
 * **Capture Accès Web** : Preuve que les deux VMs répondent via l'IP du Load Balancer.
 <img width="1137" height="202" alt="image" src="https://github.com/user-attachments/assets/4e07d716-b2e1-4177-9d4e-43dc88bc1918" />
 
-<img width="1847" height="847" alt="image" src="https://github.com/user-attachments/assets/17aeb8c7-9a2a-435f-98da-6567eca8cc83" />
+<img width="1916" height="956" alt="image" src="https://github.com/user-attachments/assets/10623999-17a2-46a1-a967-67e13c5ec661" />
 
 <img width="1912" height="953" alt="image" src="https://github.com/user-attachments/assets/befd3d86-ee8c-4b22-a322-c0f58f0c269a" />
 
