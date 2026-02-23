@@ -63,10 +63,10 @@ Point d'entrée unique pour la haute disponibilité :
 <img width="802" height="147" alt="image" src="https://github.com/user-attachments/assets/0ca2a586-534b-47cc-a7c0-40148a1601e9" />
 
 * **Capture Accès Web** : Preuve que les deux VMs répondent via l'IP du Load Balancer.
-<img width="1907" height="906" alt="image" src="https://github.com/user-attachments/assets/13837a75-d057-4d9b-aa2a-2e7f627ec8f8" />
+<img width="1137" height="202" alt="image" src="https://github.com/user-attachments/assets/4e07d716-b2e1-4177-9d4e-43dc88bc1918" />
 
 > **Note sur le Load Balancing** : Pour voir la **VM 0** répondre après la **VM 1**, j'ai utilisé la commande suivante dans le terminal pour contourner la persistance de session du navigateur :
-> `for i in {1..10}; do curl -s http://<IP_DU_LOAD_BALANCER> | grep "VM"; done`
+> `for i in {1..6}; do curl -s http://<IP_DU_LOAD_BALANCER> | grep "VM"; done`
 
 ### Nettoyage de l'infrastructure
 Conformément aux consignes obligatoires pour ne pas consommer de crédits inutilement, la commande `terraform destroy` a été exécutée.
