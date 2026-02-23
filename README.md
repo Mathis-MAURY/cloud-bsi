@@ -34,7 +34,7 @@ Mise en place d'un **Network Security Group (NSG)** rattaché au subnet :
 
 ---
 
-## 💻 4. Machines Virtuelles (Partie 4)
+##  4. Machines Virtuelles (Partie 4)
 Déploiement de **2 instances Linux** avec automatisation :
 * **NICs** : Adressage IP dynamique, sans IP publique directe (sécurité renforcée).
 * **Configuration** : Taille `Standard_B1s`, image Ubuntu, authentification par mot de passe.
@@ -43,7 +43,7 @@ Déploiement de **2 instances Linux** avec automatisation :
 
 ---
 
-## ⚖️ 5. Load Balancer (Partie 5)
+##  5. Load Balancer (Partie 5)
 Point d'entrée unique pour la haute disponibilité :
 * **IP Publique** : SKU Standard et allocation Statique.
 * **Backend Pool** : Association automatique des 2 cartes réseau (NICs) des VMs.
@@ -53,7 +53,7 @@ Point d'entrée unique pour la haute disponibilité :
 
 ---
 
-## ✅ 6. Validation et Nettoyage (Partie 6)
+##  6. Validation et Nettoyage (Partie 6)
 
 ### Preuves de déploiement
 * **Capture `terraform plan`** : Validation de la planification des ressources.
