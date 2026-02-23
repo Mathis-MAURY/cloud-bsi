@@ -81,3 +81,25 @@ Conformément aux consignes obligatoires pour ne pas consommer de crédits inuti
 * **Zéro valeur en dur** : Toutes les configurations passent par des variables.
 * **Structure propre** : Code réparti sur 5 fichiers distincts.
 * **Sécurité Git** : Aucun fichier `.tfstate` n'est inclus dans ce rendu.
+
+##  Observations remarquées
+
+Lors de la réalisation de ce projet, plusieurs points techniques majeurs ont été observés et analysés pour garantir une infrastructure professionnelle.
+
+### 1. Automatisation et Scalabilité (IaC)
+* **Évolutivité horizontale :** L'utilisation du méta-argument `count = 2` démontre la puissance de l'Infrastructure as Code (IaC). Passer à 10 ou 50 instances ne nécessiterait qu'une modification d'une seule ligne dans `variables.tf`, garantissant un déploiement rapide et sans erreur humaine.
+* **Bootstrapping réussi :** Le script `custom_data` permet un "Zero-touch provisioning". L'installation de Nginx et la personnalisation de la page HTML s'effectuent sans aucune connexion manuelle en SSH, assurant que le service est opérationnel dès la fin du `terraform apply`.
+
+### 2. Haute Disponibilité et Répartition
+* **Indépendance des serveurs :** Le Load Balancer agit comme un point d'entrée unique. Grâce à la sonde de santé (**Health Probe**) sur le port 80, le trafic est intelligemment redirigé. Si une VM devenait défaillante, le service resterait disponible pour l'utilisateur final.
+* **Persistance de session (Hash-based) :** On observe qu'en rafraîchissant la page dans un navigateur classique, le message reste souvent bloqué sur la même VM. Cela s'explique par l'algorithme par défaut d'Azure qui lie l'IP du client à une instance pour éviter les déconnexions de session applicative.
+
+### 3. Sécurité et "Least Privilege"
+* **Isolation des instances :** Aucune des VMs ne possède d'adresse IP publique. Cette architecture de "Back-end" pur réduit drastiquement la surface d'attaque, rendant les serveurs inaccessibles directement depuis internet, sauf via le flux contrôlé du Load Balancer.
+* **Pare-feu (NSG) :** La mise en place de la règle **DenyAll** (priorité 4096) respecte le principe de sécurité maximale : tout ce qui n'est pas explicitement autorisé est interdit par défaut.
+
+
+
+### 4. Gestion du cycle de vie des ressources
+* **Idempotence :** Terraform a démontré sa capacité à comparer l'état réel (State) et la configuration souhaitée. Le message "No changes" lors d'un second `plan` confirme la stabilité de l'infrastructure.
+* **Responsabilité Cloud :** L'exécution systématique du `terraform destroy` en fin de TP souligne une gestion rigoureuse des coûts (FinOps), s'assurant qu'aucune ressource n'est facturée inutilement après les tests.
