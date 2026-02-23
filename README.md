@@ -1,4 +1,4 @@
-<img width="1881" height="621" alt="image" src="https://github.com/user-attachments/assets/8dcaf45b-3a96-48a4-9215-e18c0f0f69ad" /># 🚀 Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
+# 🚀 Rapport de Projet : Infrastructure Haute Disponibilité sur Azure avec Terraform
 
 **Étudiant :** Mathis MAURY  
 **Date :** Février 2026  
