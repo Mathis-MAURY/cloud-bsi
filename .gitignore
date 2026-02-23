@@ -1,1 +1,22 @@
+# --- SÉCURITÉ & SECRETS ---
+# Empêche de pousser ton fichier de mot de passe (admin_password)
 *.tfvars
+*.tfvars.json
+
+# --- ÉTAT TERRAFORM (STATE) ---
+# Contient TOUTES les données de ton infra et tes secrets EN CLAIR
+*.tfstate
+*.tfstate.*
+terraform.tfstate
+terraform.tfstate.backup
+
+# --- DOSSIERS DE TRAVAIL & BINAIRES ---
+# Dossier créé par 'terraform init' (très lourd et inutile sur Git)
+.terraform/
+# Fichier de verrouillage des versions des providers
+.terraform.lock.hcl
+
+# --- LOGS ET TEMPORAIRES ---
+*.log
+.DS_Store
+Thumbs.db
